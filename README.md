@@ -10,8 +10,7 @@
 
 ### ✨ Overview
 
-`kpermute` provides stable, deterministic **pseudo-random permutations** over integer domains using a simple **cycle-walking hash** algorithm.  
-It behaves like a keyed shuffler: every RNG seed defines a new bijection between `[0, size)`.
+`kpermute` provides stable, deterministic **pseudo-random permutations** over integer domains using a simple **cycle-walking hash** algorithm.  It behaves like a keyed shuffler: every RNG seed defines a new bijection between `[0, size)`.
 
 Use it when you need a *repeatable shuffle*, *non-cryptographic obfuscation*, or *format-preserving ID remapping*.
 
