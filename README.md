@@ -77,13 +77,13 @@ This version includes modifications and refinements by me.
 If you recognize or can identify the original source, please contact me.
 
 - [Ciphers with Arbitrary Finite Domains (2002)](https://web.cs.ucdavis.edu/~rogaway/papers/subset.pdf):  
-  Introduces the cycle-walking method for mapping a permutation over a power-of-two space into a smaller domain.  
+  Introduces the cycle-walking method for mapping a permutation over a power-of-two space into a smaller domain.
 - [Format-Preserving Encryption (FFX) (2009)](https://csrc.nist.gov/csrc/media/projects/block-cipher-techniques/documents/bcm/proposed-modes/ffx/ffx-spec.pdf):  
   Defines standard format-preserving encryption constructions that also rely on cycle-walking.  
 - [Feistel Ciphers](https://en.wikipedia.org/wiki/Feistel_cipher):  
-  Classical invertible round-based structure used in many block ciphers; `KPermute` is conceptually similar but operates on a single modular integer instead of split halves for efficiency.  
+  Classical invertible round-based structure used in many block ciphers; `KPermute` is simpler but more efficient. 
 - [Integer Hash Functions (1997)](http://burtleburtle.net/bob/hash/integer.html):  
-  Overview of multiply–xor–shift integer mixers that influenced `KPermute`’s round function.  
+  Overview of multiply–xor–shift integer mixers used in `KPermute`’.  
 - [An Experimental Exploration of Marsaglia’s Xorshift Generators (2016)](https://arxiv.org/pdf/1402.6246.pdf):  
   Analyzes xor/shift mixers and their statistical properties.  
 - [xxHash (2014)](https://github.com/Cyan4973/xxHash):  
