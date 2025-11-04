@@ -4,13 +4,13 @@
 
 > ⚙️ Kotlin library for shuffling lists too big for memory or for ID obfuscation. Using bijective integer permutations with fast cycle-walking hash mixing.
 > 
-> **Not cryptographic — but fast, lightweight, and repeatable.**
+> **Not intended for cryptographic use; but it's fast, resource light, and statistically sound.**
 
 ---
 
 ### Overview
 
-`kpermute` provides stable, deterministic **pseudo-random permutations** over integer domains using a simple **cycle-walking hash** algorithm.  It behaves like a keyed shuffler: every RNG seed defines a new bijection between `[0, size)`.
+`kpermute` provides stable, deterministic **pseudo-random permutations** over integer domains using a simple cycle-walking hash algorithm.  It behaves like a keyed shuffler: every RNG seed defines a new bijection between `[0, size)`.
 Originally developed as part of [COMBO](https://github.com/Eigenity/combo) used for statistical sampling of decision variables in a search space but has been extracted here into it's own thing.
 
 ---
