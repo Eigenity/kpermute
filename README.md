@@ -31,7 +31,7 @@ import com.eigenity.kpermute.*
 
 fun main() {
 
-    // This example shows how to encode a Long ID to e.g. obfuscate 
+    // This example shows how to encode a Long ID to e.g. obfuscate how many users you have in your app
     val perm = IntPermutation(size = 100, seed = 1248192)
     val encoded = perm.encode(42) // deterministic remapping of 42
     println(encoded) // 
