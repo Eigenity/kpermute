@@ -8,14 +8,14 @@
 
 ---
 
-### ✨ Overview
+### Overview
 
 `kpermute` provides stable, deterministic **pseudo-random permutations** over integer domains using a simple **cycle-walking hash** algorithm.  It behaves like a keyed shuffler: every RNG seed defines a new bijection between `[0, size)`.
 Originally developed as part of [COMBO](https://github.com/Eigenity/combo) used for statistical sampling of decision variables in a search space but has been extracted here into it's own thing.
 
 ---
 
-### 🧪 Use cases
+### Use cases
  
 - Generating repeatable pseudo-random shuffles
 - Obfuscating integer IDs (user IDs, session numbers)
@@ -23,7 +23,7 @@ Originally developed as part of [COMBO](https://github.com/Eigenity/combo) used 
 - Data masking for non-sensitive identifiers
 
 
-### 🚀 Example
+### Example
 
 ```kotlin
 import com.eigenity.kpermute.*
@@ -57,19 +57,19 @@ fun main() {
 }
 ```
 
-### 🧠 How It Works
-KPermute creates a **deterministic shuffle** of all numbers in a chosen range — for example, from `0` to `9999`.  
-Given the same seed, it always produces the same unique rearrangement of values, but every number appears exactly once.  
-This means you can "scramble" IDs or keys in a repeatable way, without storing lookup tables or using heavy cryptography.
+### How it works
+KPermute creates a **deterministic shuffle** of all numbers in a chosen range, for example, from `0` to `9999`. 
+Given the same seed, it always produces the same unique rearrangement of values, but every number appears exactly once. 
+This means you can "scramble" IDs or keys in a repeatable way, without storing lookup tables.
 
-Under the hood, each number is passed through a small **mixing function** several times.  
-That function multiplies by a constant, adds a secret key, and blends bits together using fast XOR and shift operations.  
-Because these operations are carefully chosen to be reversible, the process can also run backwards:  
-calling `decode()` will perfectly recover the original number from its scrambled form.
+Under the hood, each number is passed through a small **mixing function** several times. 
+That function multiplies by a constant, adds a secret key, and blends bits together using fast XOR and shift operations. 
+Because these operations are designed to be reversible, the process can also run backwards: 
+calling `decode()` will recover the original number from its scrambled form.
 
-The algorithm behaves a bit like a simplified **Feistel cipher** (used in many encryption systems), but instead of encrypting text, it permutes integers.  
-It applies several invertible "rounds" of arithmetic to mix the bits thoroughly, then repeats until the result fits in your target range.  
-The result is a fast, lightweight way to map integers to unique pseudo-random counterparts — ideal for obfuscation, sampling, or repeatable randomization.
+The algorithm behaves a bit like a simplified **Feistel cipher** (used in many encryption systems), but instead of encrypting text, it permutes integers. 
+It applies several invertible "rounds" of hashing to mix the bits thoroughly, then repeats until the result fits in your target range. 
+The result is a fast and lightweight way to map integers to unique pseudo-random counterparts.
 
 ### 🔗 Sources
 The original source of this implementation is unknown but is presumed to be in the public domain.  
