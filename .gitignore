@@ -1,0 +1,15 @@
+### General
+.gradle
+local.properties
+build/
+**/build
+**/*.db
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.hprof
+out/
+.fleet/
