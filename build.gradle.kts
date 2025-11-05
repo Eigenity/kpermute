@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
+
 plugins {
     kotlin("jvm") version "2.2.21"
     id("org.jetbrains.dokka") version "2.1.0"
@@ -12,45 +14,34 @@ repositories { mavenCentral() }
 
 kotlin {
     jvmToolchain(21)
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
-        freeCompilerArgs.add("-Xjvm-default=all") // nicer default methods for interfaces
-    }
-}
-
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:6.0.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
+    compilerOptions { jvmTarget.set(JVM_21) }
 }
 
 java {
+    toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
     withSourcesJar()
+    withJavadocJar()
 }
 
-// Generate Javadoc-style docs with Dokka and publish as a jar
-val dokkaJavadoc by tasks.existing(org.jetbrains.dokka.gradle.DokkaTask::class)
-val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(dokkaJavadoc)
-    from(dokkaJavadoc.map { it.outputDirectory })
-    archiveClassifier.set("javadoc")
+dependencies {
+    testImplementation(kotlin("test"))
 }
 
-// ---- Publishing (creates a single Maven publication with sources + javadoc) ----
+tasks.test { useJUnitPlatform() }
+
+tasks.named<Jar>("javadocJar") {
+    dependsOn(tasks.named("dokkaGenerate"))
+    from(layout.buildDirectory.dir("dokka/html"))
+}
+
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
-            artifact(javadocJar)
-
             pom {
-                name.set("your-lib")
+                name.set("kpermute")
                 description.set("Pure Kotlin JVM library.")
-                url.set("https://github.com/youruser/your-lib")
-
+                url.set("https://github.com/Eigenity/kpermute")
                 licenses {
                     license {
                         name.set("Apache-2.0")
@@ -58,28 +49,34 @@ publishing {
                     }
                 }
                 scm {
-                    url.set("https://github.com/youruser/your-lib")
-                    connection.set("scm:git:https://github.com/youruser/your-lib.git")
-                    developerConnection.set("scm:git:ssh://git@github.com/youruser/your-lib.git")
+                    url.set("https://github.com/Eigenity/kpermute")
+                    connection.set("scm:git:https://github.com/Eigenity/kpermute.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/Eigenity/kpermute.git")
                 }
                 developers {
                     developer {
-                        id.set("youruser")
-                        name.set("Your Name")
-                        url.set("https://github.com/youruser")
+                        id.set("rasros")
+                        name.set("Rasmus Ros")
+                        url.set("https://github.com/rasros")
                     }
                 }
             }
         }
     }
-    // Repos: publish to local for testing; upload to Central happens via the Portal/JReleaser (see notes).
     repositories {
-        maven { name = "localStaging"; url = uri(layout.buildDirectory.dir("staging-repo")) }
+        maven {
+            name = "central"
+            url = uri("https://central.sonatype.com/api/v1/publisher/upload")
+            credentials {
+                username = System.getenv("CENTRAL_PORTAL_USER")
+                password = System.getenv("CENTRAL_PORTAL_TOKEN")
+            }
+        }
+        maven {
+            name = "localStaging"
+            url = uri(layout.buildDirectory.dir("staging-repo"))
+        }
     }
 }
 
-signing {
-    // Recommended: in-memory PGP keys via gradle.properties or CI env vars
-    // ORG_GRADLE_PROJECT_signingKey, ORG_GRADLE_PROJECT_signingPassword
-    sign(publishing.publications["mavenJava"])
-}
+signing { sign(publishing.publications["mavenJava"]) }
