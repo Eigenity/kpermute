@@ -26,9 +26,8 @@ class UIntPermutation(
         invConst = PermMathUInt.invOdd32(const, mask)
     }
 
-    override fun encode(value: Int): Int {
+    override fun encodeUnchecked(value: Int): Int {
         val u = value.toUInt()
-        require(u < usize) { "value out of range [0, $size)" }
         var x = u and mask
         do {
             repeat(rounds) { r ->
@@ -39,9 +38,8 @@ class UIntPermutation(
         return x.toInt()
     }
 
-    override fun decode(encoded: Int): Int {
+    override fun decodeUnchecked(encoded: Int): Int {
         val u = encoded.toUInt()
-        require(u < usize) { "value out of range [0, $size)" }
         var x = u and mask
         do {
             for (r in rounds - 1 downTo 0) {

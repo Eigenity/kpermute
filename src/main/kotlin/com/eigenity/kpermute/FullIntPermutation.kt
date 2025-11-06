@@ -16,7 +16,7 @@ class FullIntPermutation(
     private val c1Inv: Int = PermMathInt.invOdd32(c1, -1)
     private val c2Inv: Int = PermMathInt.invOdd32(c2, -1)
 
-    override fun encode(value: Int): Int {
+    override fun encodeUnchecked(value: Int): Int {
         var x = value
         repeat(rounds) { r ->
             x = x xor k1[r]
@@ -28,7 +28,7 @@ class FullIntPermutation(
         return x
     }
 
-    override fun decode(encoded: Int): Int {
+    override fun decodeUnchecked(encoded: Int): Int {
         var y = encoded
         for (r in rounds - 1 downTo 0) {
             y = y xor k2[r]

@@ -25,8 +25,7 @@ class HalfIntPermutation(
         invConst = PermMathInt.invOdd32(const, mask)
     }
 
-    override fun encode(value: Int): Int {
-        require(value in 0..<size)
+    override fun encodeUnchecked(value: Int): Int {
         var x = value
         do {
             repeat(rounds) { r ->
@@ -37,8 +36,7 @@ class HalfIntPermutation(
         return x
     }
 
-    override fun decode(encoded: Int): Int {
-        require(encoded in 0..<size)
+    override fun decodeUnchecked(encoded: Int): Int {
         var x = encoded
         do {
             for (r in rounds - 1 downTo 0) {

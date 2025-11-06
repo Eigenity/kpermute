@@ -47,4 +47,14 @@ class IntPermutationsTest {
         val p = intPermutation(UInt.MAX_VALUE)
         assertTrue(p is FullIntPermutation)
     }
+
+    @Test
+    fun permutedByRoundTrip() {
+        val p = ArrayIntPermutation(5, Random(7))
+        val data = listOf("a", "b", "c", "d", "e")
+        val shuffled = data.permutedBy(p)
+        val restored = shuffled.unpermutedBy(p)
+        assertEquals(data, restored)
+        assertEquals(data.toSet(), shuffled.toSet())
+    }
 }

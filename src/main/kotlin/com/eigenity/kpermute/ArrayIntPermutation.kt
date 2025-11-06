@@ -17,15 +17,9 @@ class ArrayIntPermutation(
         }
     }
 
-    override fun encode(value: Int): Int {
-        require(value in 0..<size)
-        return array[value]
-    }
+    override fun encodeUnchecked(value: Int): Int = array[value]
 
-    override fun decode(encoded: Int): Int {
-        require(encoded in 0..<size)
-        return inverse[encoded]
-    }
+    override fun decodeUnchecked(encoded: Int): Int = inverse[encoded]
 
     override fun iterator(offset: Int): IntIterator =
         if (offset == 0) array.iterator()
