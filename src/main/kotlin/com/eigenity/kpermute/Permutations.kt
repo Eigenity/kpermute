@@ -68,7 +68,7 @@ fun intPermutation(
     rng: Random = Random.Default,
     rounds: Int = 0
 ): IntPermutation {
-    require(rounds >= 0)
+    require(rounds >= 0) { "rounds must be > 0" }
 
     // Determine default rounds when not provided.
     fun defaultRoundsForHalf(n: Int): Int = when {
@@ -76,6 +76,7 @@ fun intPermutation(
         n <= 1 shl 20 -> 4          // up to 1 M
         else -> 6                   // larger domains
     }
+
     fun defaultRoundsForUInt(n: Int): Int = when {
         n <= 1 shl 16 -> 3
         n <= 1 shl 24 -> 4
