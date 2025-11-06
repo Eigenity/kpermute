@@ -24,4 +24,6 @@ class ArrayIntPermutation(
     override fun iterator(offset: Int): IntIterator =
         if (offset == 0) array.iterator()
         else array.sliceArray(offset..<size).iterator()
+
+    override fun toString(): String = "ArrayIntPermutation(size=$size)"
 }

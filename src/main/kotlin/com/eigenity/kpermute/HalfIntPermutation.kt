@@ -57,4 +57,6 @@ class HalfIntPermutation(
             }
         }
     }
+
+    override fun toString(): String = "HalfIntPermutation(size=$size)"
 }

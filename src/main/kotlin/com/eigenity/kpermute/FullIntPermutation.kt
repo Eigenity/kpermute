@@ -50,4 +50,6 @@ class FullIntPermutation(
             }
         }
     }
+
+    override fun toString(): String = "FullIntPermutation(size=$size)"
 }

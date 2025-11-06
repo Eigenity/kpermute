@@ -60,4 +60,7 @@ class UIntPermutation(
             }
         }
     }
+
+    override fun toString(): String = "UIntPermutation(size=$size)"
+
 }
