@@ -69,28 +69,41 @@ fun intPermutation(
     rounds: Int = 0
 ): IntPermutation {
     require(rounds >= 0)
+
+    // Determine default rounds when not provided.
+    fun defaultRoundsForHalf(n: Int): Int = when {
+        n <= 1 shl 10 -> 3          // up to 1 K
+        n <= 1 shl 20 -> 4          // up to 1 M
+        else -> 6                   // larger domains
+    }
+    fun defaultRoundsForUInt(n: Int): Int = when {
+        n <= 1 shl 16 -> 3
+        n <= 1 shl 24 -> 4
+        else -> 5
+    }
+
     return when {
         size <= 16u -> ArrayIntPermutation(size.toInt(), rng)
+
         size == UInt.MAX_VALUE ->
             FullIntPermutation(
                 rng,
-                if (rounds == 0) 1 else rounds
+                if (rounds == 0) 2 else rounds   // FullInt needs few rounds
             )
 
         size.toInt() < 0 ->
             UIntPermutation(
                 size.toInt(),
                 rng,
-                if (rounds == 0) 3 else rounds
+                if (rounds == 0) defaultRoundsForUInt(size.toInt()) else rounds
             )
 
-        else -> {
+        else ->
             HalfIntPermutation(
                 size.toInt(),
                 rng,
-                if (rounds == 0) 3 else rounds
+                if (rounds == 0) defaultRoundsForHalf(size.toInt()) else rounds
             )
-        }
     }
 }
 
