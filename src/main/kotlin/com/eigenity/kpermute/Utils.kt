@@ -3,7 +3,6 @@ package com.eigenity.kpermute
 internal object PermMathInt {
     /** k = min s.t. 2^k >= size (size in 1..2^31), mask = (2^k - 1), rshift ~= k*3/7 */
     fun block(sizeExclusive: Int): Triple<Int /*mask*/, Int /*kBits*/, Int /*rshift*/> {
-        require(sizeExclusive > 0)
         val k =
             if (sizeExclusive <= 1) 1 else 32 - Integer.numberOfLeadingZeros(
                 sizeExclusive - 1
@@ -35,7 +34,6 @@ internal object PermMathInt {
 internal object PermMathUInt {
     /** k = min s.t. 2^k >= size, mask = (2^k - 1) (k in 1..32). */
     fun block(sizeExclusive: UInt): Triple<UInt /*mask*/, Int /*kBits*/, Int /*rshift*/> {
-        require(sizeExclusive > 0u)
         val k = if (sizeExclusive <= 1u) 1
         else 32 - Integer.numberOfLeadingZeros((sizeExclusive - 1u).toInt())
         val mask = if (k == 32) 0xFFFF_FFFFu else (1u shl k) - 1u
