@@ -56,7 +56,7 @@ class UIntPermutation(
             override fun hasNext() = i < usize
             override fun nextInt(): Int {
                 if (!hasNext()) throw NoSuchElementException()
-                return encode((i++).toInt())
+                return encodeUnchecked((i++).toInt())
             }
         }
     }

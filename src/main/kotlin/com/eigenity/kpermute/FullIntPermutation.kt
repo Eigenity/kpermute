@@ -46,7 +46,7 @@ class FullIntPermutation(
             override fun hasNext() = i != -1
             override fun nextInt(): Int {
                 if (!hasNext()) throw NoSuchElementException()
-                return encode((i++))
+                return encodeUnchecked((i++))
             }
         }
     }

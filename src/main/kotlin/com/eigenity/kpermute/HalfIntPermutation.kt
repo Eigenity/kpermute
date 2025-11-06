@@ -53,7 +53,7 @@ class HalfIntPermutation(
             override fun hasNext() = i < size
             override fun nextInt(): Int {
                 if (!hasNext()) throw NoSuchElementException()
-                return encode((i++))
+                return encodeUnchecked((i++))
             }
         }
     }
