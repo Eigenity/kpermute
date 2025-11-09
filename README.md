@@ -104,12 +104,12 @@ Each permutation has a `size`:
 
 Factory functions select implementations:
 
-| Domain Type       | Implementation                         | Description             |                                 |
-|-------------------|----------------------------------------|-------------------------|---------------------------------|
-| Tiny (`≤16`)      | `Array[Int                             | Long]Permutation`       | Uses shuffled array and inverse |
-| Finite            | `Half[Int                              | Long]Permutation`       | Uses cycle-walking              |
-| Full bit-width    | `Full[Int                              | Long]Permutation`       | No cycle-walking                |
-| Unsigned variants | `UIntPermutation` / `ULongPermutation` | Modulo `2^32` or `2^64` |                                 |
+| Domain Type       | Implementation               | Description                     |
+|-------------------|------------------------------|---------------------------------|
+| Tiny (`≤16`)      | `Array[Int/Long]Permutation` | Uses shuffled array and inverse |
+| Finite            | `Half[Int/Long]Permutation`  | Uses cycle-walking              |
+| Full bit-width    | `Full[Int/Long]Permutation`  | No cycle-walking                |
+| Unsigned variants | `U[Int/Long]Permutation`     | Modulo `2^32` or `2^64`         |                                 |
 
 Range factories like `intPermutation(range)` and `longPermutation(range)` wrap
 these with a `range(...)` view, so you can permute directly on intervals such as
@@ -126,8 +126,9 @@ Each permutation round:
 3. Applies xor-shift steps (`x ^= x >>> s`) to diffuse bits.
 
 All steps are invertible using modular inverses and xor-shift
-inversion [1][3][4][5].
-For non-power-of-two domains, KPermute uses **cycle-walking** [1][2]: permute in
+inversion [1] [3] [4] [5].
+For non-power-of-two domains, KPermute uses **cycle-walking** [1] [2]: permute
+in
 the next power-of-two space and retry until the output falls in `[0, size)`.
 
 ---
@@ -153,7 +154,7 @@ the next power-of-two space and retry until the output falls in `[0, size)`.
    submission, 2010.* [Spec][2]
 3. D. E. Knuth,
    *The Art of Computer Programming, Vol. 2: Seminumerical Algorithms,* 3rd ed.,
-   1997. [Info][3]
+    1997. [Info][3]
 4. B. Jenkins,
    “Integer Hash Functions,” 1997. [Web][4]
 5. S. Vigna,
