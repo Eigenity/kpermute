@@ -164,12 +164,47 @@ fun longPermutation(
     rng: Random = Random.Default,
     rounds: Int = 0
 ): LongPermutation {
-    require(rounds >= 0) { "rounds must be >= 0" }
+        require(rounds >= 0) { "rounds must be >= 0" }
 
-    // TODO: implement LongPermutation variants (HalfLongPermutation, ULongPermutation, FullLongPermutation)
-    // and dispatch similarly to intPermutation. For now this is a stub.
-    throw NotImplementedError("longPermutation(size, rng, rounds) is not implemented yet")
-}
+        fun defaultRoundsForHalf(n: Long): Int = when {
+            n <= 1L shl 10 -> 3          // up to 1 K
+            n <= 1L shl 20 -> 4          // up to 1 M
+            else -> 6                    // larger domains
+        }
+
+        fun defaultRoundsForULong(n: Long): Int = when {
+            n <= 1L shl 16 -> 3
+            n <= 1L shl 24 -> 4
+            else -> 5
+        }
+
+        return when {
+            size == -1L ->
+                FullLongPermutation(
+                    rng,
+                    if (rounds == 0) 2 else rounds
+                )
+
+            size < 0L ->
+                ULongPermutation(
+                    size,
+                    rng,
+                    if (rounds == 0) defaultRoundsForULong(-size) else rounds
+                )
+
+            size <= 16L ->
+                ArrayLongPermutation(size, rng)
+
+            else ->
+                HalfLongPermutation(
+                    size,
+                    rng,
+                    if (rounds == 0) defaultRoundsForHalf(size) else rounds
+                )
+        }
+    }
+
+
 
 /**
  * Provides a `[LongPermutation]` instance, a fast repeatable integer permutation
