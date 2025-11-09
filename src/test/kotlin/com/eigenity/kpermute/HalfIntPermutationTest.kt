@@ -9,7 +9,7 @@ class HalfIntPermutationTest {
     fun bijectionVariousSizes() {
         for (n in listOf(5, 31, 64, 128)) {
             val p = HalfIntPermutation(n, Random(7))
-            CommonAsserts.assertBijectionOverDomain(p, n)
+            CommonAssertsInt.assertBijectionOverDomain(p, n)
         }
     }
 
@@ -17,15 +17,15 @@ class HalfIntPermutationTest {
     fun iteratorFullAndOffset() {
         val n = 50
         val p = HalfIntPermutation(n, Random(321))
-        CommonAsserts.assertIteratorMatchesEncode(p, n)
-        CommonAsserts.assertIteratorMatchesEncode(p, n, offset = 13)
+        CommonAssertsInt.assertIteratorMatchesEncode(p, n)
+        CommonAssertsInt.assertIteratorMatchesEncode(p, n, offset = 13)
     }
 
     @Test
     fun deterministicForSameSeed() {
         val n = 100
         val factory = { HalfIntPermutation(n, Random(77)) }
-        CommonAsserts.assertDeterministic(factory)
+        CommonAssertsInt.assertDeterministic(factory)
     }
 
     @Test
@@ -34,7 +34,7 @@ class HalfIntPermutationTest {
         val seed = 99L
         val p1 = HalfIntPermutation(n, Random(seed), rounds = 2)
         val p2 = HalfIntPermutation(n, Random(seed), rounds = 4)
-        CommonAsserts.assertDifferentMapping(p1, p2, sample = 17)
+        CommonAssertsInt.assertDifferentMapping(p1, p2, sample = 17)
     }
 
     @Test
@@ -65,6 +65,6 @@ class HalfIntPermutationTest {
     fun rejectsOutOfRange() {
         val n = 10
         val p = HalfIntPermutation(n, Random(2))
-        CommonAsserts.assertRangeChecks(p, n)
+        CommonAssertsInt.assertRangeChecks(p, n)
     }
 }

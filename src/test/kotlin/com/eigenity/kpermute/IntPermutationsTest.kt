@@ -32,14 +32,14 @@ class IntPermutationsTest {
     @Test
     fun halfIntPermutationLargeStillBijection() {
         val p = HalfIntPermutation(512, Random(88))
-        CommonAsserts.assertBijectionOverDomain(p, 512)
+        CommonAssertsInt.assertBijectionOverDomain(p, 512)
     }
 
     @Test
     fun respectsRoundsParameterAcrossFactory() {
         val p1 = intPermutation(64, seed = 123, rounds = 1)
         val p2 = intPermutation(64, seed = 123, rounds = 5)
-        CommonAsserts.assertDifferentMapping(p1, p2, sample = 10)
+        CommonAssertsInt.assertDifferentMapping(p1, p2, sample = 10)
     }
 
     @Test

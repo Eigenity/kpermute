@@ -2,7 +2,7 @@ package com.eigenity.kpermute
 
 import kotlin.test.*
 
-object CommonAsserts {
+object CommonAssertsInt {
 
     /** Verify encode/decode is a bijection on [0, size). */
     fun assertBijectionOverDomain(p: IntPermutation, size: Int) {

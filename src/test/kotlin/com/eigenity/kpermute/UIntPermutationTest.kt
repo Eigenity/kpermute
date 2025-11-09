@@ -10,7 +10,7 @@ class UIntPermutationTest {
     fun bijectionVariousSizes() {
         for (n in listOf(7, 15, 64, 1000)) {
             val p = UIntPermutation(n, Random(55))
-            CommonAsserts.assertBijectionOverDomain(p, n)
+            CommonAssertsInt.assertBijectionOverDomain(p, n)
         }
     }
 
@@ -19,7 +19,7 @@ class UIntPermutationTest {
         val n = 5
         val p = UIntPermutation(n, Random(1))
         // full
-        CommonAsserts.assertIteratorMatchesEncode(p, n)
+        CommonAssertsInt.assertIteratorMatchesEncode(p, n)
         // offset == last index → one element then end
         val itLast = p.iterator(n - 1)
         assertTrue(itLast.hasNext())
@@ -36,7 +36,7 @@ class UIntPermutationTest {
     fun deterministicForSameSeed() {
         val n = 20
         val factory = { UIntPermutation(n, Random(9)) }
-        CommonAsserts.assertDeterministic(factory)
+        CommonAssertsInt.assertDeterministic(factory)
     }
 
     @Test
@@ -46,13 +46,13 @@ class UIntPermutationTest {
         }
         val p1 = UIntPermutation(128, Random(5), rounds = 1)
         val p2 = UIntPermutation(128, Random(5), rounds = 5)
-        CommonAsserts.assertDifferentMapping(p1, p2)
+        CommonAssertsInt.assertDifferentMapping(p1, p2)
     }
 
     @Test
     fun rejectsOutOfRange() {
         val n = 10
         val p = UIntPermutation(n, Random(1))
-        CommonAsserts.assertRangeChecks(p, n)
+        CommonAssertsInt.assertRangeChecks(p, n)
     }
 }

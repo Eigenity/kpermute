@@ -24,7 +24,7 @@ class FullIntPermutationTest {
     fun roundsParameterAffectsMapping() {
         val p1 = FullIntPermutation(Random(1), rounds = 1)
         val p2 = FullIntPermutation(Random(1), rounds = 3)
-        CommonAsserts.assertDifferentMapping(p1, p2)
+        CommonAssertsInt.assertDifferentMapping(p1, p2)
     }
 
     @Test

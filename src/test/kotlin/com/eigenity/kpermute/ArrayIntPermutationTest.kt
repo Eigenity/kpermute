@@ -10,7 +10,7 @@ class ArrayIntPermutationTest {
     fun bijectionSmallDomains() {
         for (n in 1..16) {
             val p = ArrayIntPermutation(n, Random(123))
-            CommonAsserts.assertBijectionOverDomain(p, n)
+            CommonAssertsInt.assertBijectionOverDomain(p, n)
         }
     }
 
@@ -18,7 +18,7 @@ class ArrayIntPermutationTest {
     fun iteratorCoversAllInOrderOfEncode() {
         val n = 10
         val p = ArrayIntPermutation(n, Random(1))
-        CommonAsserts.assertIteratorMatchesEncode(p, n)
+        CommonAssertsInt.assertIteratorMatchesEncode(p, n)
     }
 
     @Test
@@ -26,13 +26,13 @@ class ArrayIntPermutationTest {
         val n = 12
         val off = 5
         val p = ArrayIntPermutation(n, Random(2))
-        CommonAsserts.assertIteratorMatchesEncode(p, n, off)
+        CommonAssertsInt.assertIteratorMatchesEncode(p, n, off)
     }
 
     @Test
     fun deterministicForSameSeed() {
         val factory = { ArrayIntPermutation(16, Random(42)) }
-        CommonAsserts.assertDeterministic(factory)
+        CommonAssertsInt.assertDeterministic(factory)
     }
 
     @Test
@@ -45,6 +45,6 @@ class ArrayIntPermutationTest {
     fun rejectsOutOfRange() {
         val n = 7
         val p = ArrayIntPermutation(n, Random(3))
-        CommonAsserts.assertRangeChecks(p, n)
+        CommonAssertsInt.assertRangeChecks(p, n)
     }
 }
