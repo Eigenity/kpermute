@@ -7,14 +7,15 @@ class ULongPermutation(
     override val size: Long,
     rng: Random = Random.Default,
     private val rounds: Int = 3,
-    private val const: ULong = 0x52A531B54E4EC5CBU
+    private val const: ULong = 0x9E3779B97F4A7C15U
 ) : LongPermutation {
 
     private val usize: ULong = size.toULong()
     private val mask: ULong
     private val kBits: Int
     private val rshift: Int
-    private val keys: ULongArray = ULongArray(rounds) { rng.nextLong().toULong() }
+    private val keys: ULongArray =
+        ULongArray(rounds) { rng.nextLong().toULong() }
     private val invConst: ULong
 
     init {

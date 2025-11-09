@@ -7,7 +7,7 @@ class UIntPermutation(
     override val size: Int,
     rng: Random = Random.Default,
     private val rounds: Int = 3,
-    private val const: UInt = 0x7F4A7C15u            // must be odd
+    private val const: UInt = 0x9E3779B1u
 ) : IntPermutation {
 
     private val usize = size.toUInt()

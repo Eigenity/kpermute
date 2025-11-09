@@ -2,17 +2,11 @@ package com.eigenity.kpermute
 
 import kotlin.random.Random
 
-fun main() {
-    println(FullLongPermutation().c1)
-    println(FullLongPermutation().c2)
-}
-
 class FullLongPermutation(
     rng: Random = Random.Default,
     private val rounds: Int = 2,
-    val c1: Long = -4658895280553007687,
-    val c2: Long = -7723592293110705685
-
+    private val c1: Long = -4658895280553007687,
+    private val c2: Long = -7723592293110705685
 ) : LongPermutation {
 
     override val size: Long get() = -1L

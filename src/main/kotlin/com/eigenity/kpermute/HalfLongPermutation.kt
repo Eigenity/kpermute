@@ -1,5 +1,6 @@
 package com.eigenity.kpermute
 
+import kotlin.math.absoluteValue
 import kotlin.random.Random
 
 class HalfLongPermutation(
@@ -18,7 +19,7 @@ class HalfLongPermutation(
     init {
         require(size > 0L) { "size must be > 0" }
         require(rounds > 0) { "rounds must be > 0" }
-        require(const % 2L == 1L) { "const must be odd" }
+        require((const % 2L).absoluteValue == 1L) { "const must be odd" }
 
         val (m, k, r) = PermMathLong.block(size)
         mask = m; kBits = k; rshift = r
