@@ -2,57 +2,88 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.eigenity/kpermute.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.eigenity/kpermute/1.0.0)
 
-> ⚙️ Kotlin library for shuffling lists too big for memory or for ID obfuscation. Using bijective integer permutations with fast cycle-walking hash mixing.
-> 
-> **Not intended for cryptographic use; but it's fast, resource light, and statistically sound.**
+> **Fast, deterministic integer permutation library for Kotlin.**  
+> Shuffle or obfuscate large integer domains efficiently using bijective,
+> reversible hash mixing.
+>
+> ⚠️ **Not intended for cryptographic use.**  
+> Suitable for data masking, sampling, and reproducible pseudo-randomization
+> where reversibility is required.
 
 ---
 
-### Overview
+## Overview
 
-`kpermute` provides stable, deterministic **pseudo-random permutations** over integer domains using a simple cycle-walking hash algorithm.  It behaves like a keyed shuffler: every RNG seed defines a new bijection between `[0, size)`.
-Originally developed as part of [COMBO](https://github.com/Eigenity/combo) used for statistical sampling of decision variables in a search space but has been extracted here into it's own thing.
+`kpermute` generates stable, deterministic **pseudo-random permutations** over
+integer ranges.  
+Each seed defines a unique bijection between `[0, size)`.  
+The result acts like a **keyed shuffle**, repeatable, memory-efficient, and
+invertible.
 
----
+Typical use cases:
 
-### Use cases
- 
-- Generating repeatable pseudo-random shuffles
-- Obfuscating integer IDs (user IDs, session numbers)
-- Sampling or load-balancing without collisions
+- Repeatable pseudo-random shuffles
+- Obfuscating integer IDs (e.g., user IDs, session numbers)
+- Collision-free sampling or load balancing
 - Data masking for non-sensitive identifiers
 
+---
 
-### Example
+## Installation
+
+Add the dependency from Maven Central:
 
 ```kotlin
-import com.eigenity.kpermute.*
+implementation("com.eigenity:kpermute:1.0.0")
+```
 
+## Example Usage
+
+```kotlin
 fun main() {
+// Example 1: Obfuscate numeric IDs reproducibly
+// The range is 0-Int.MAX_VALUE so no negative values as in/out
+val intIdPerm = intPermutation(seed = 1L)
+val intId = 49102490
+val intIdEncoded = intIdPerm.encode(intId)
+println("encoded: $intIdEncoded (always prints 1394484051)")
 
-    // This example shows how to encode a Long ID to e.g. obfuscate how many users you have in your app
-    val longPerm = LongPermutation(size = 1_000_000_000L, Random(0))
-    val encoded = longPerm.encode(42L)
-    println("encoded: $encoded (always 85 for this fixed seed)")
-    val decoded = longPerm.decode(encoded)
-    println("decoded: $decoded (should be 42)")
-    // perm.encode(2_000_000_000) // too big to encode since the size was set to 1B
 
-    // This example shows how to shuffle a very large list.
-    // Pretend that this list is read from a disk with random access.
-    // Like a parquet file with billions of rows.
-    val list = List(100) { it }
-    val intPerm = IntPermutation(size = list.size)
-
-    for (i in list.indices) {
-        // this will print all elements shuffled without loading the whole list in memory
-        print("" + list[intPerm.encode(i)] + ", ")
+    // Example 2: Obfuscate UUID-v7 IDs
+    // hiding timestamp and UUID-version
+    val uuidPerm = longPermutation(-1, seed = 1L)
+    val uuid = Uuid.parse("019a67e6-02a0-7646-a5cd-ddcb69d3b71c")
+    val encoded = uuid.toLongs { l1, l2 ->
+        Uuid.fromLongs(
+            uuidPerm.encode(l1),
+            uuidPerm.encode(l2 xor 5955220737039975883L)
+        )
     }
-    println()
+    println("encoded: $encoded")
 
-    // verify that all elements are included once
-    println(longPerm.toList().size) // 100
-    println(longPerm.toSet().size) // 100
+
+    // Example 3: Shuffle a large list
+    val largeList = object : AbstractList<Int>() {
+        override val size: Int get() = Int.MAX_VALUE
+        override fun get(index: Int) = index
+    }
+    val perm = intPermutation(largeList.size)
+    val shuffled = largeList.permuted(perm) // does not load anything
+    println("shuffled: ${shuffled.take(20)}}")
+    val unshuffled = shuffled.unpermuted(perm)
+    println("unshuffled: ${unshuffled.take(20)}")
+
+
+    // Example 4: Custom range permutation and negative values
+    val rangePerm = intPermutation(-100..199)
+    println("encode(-50): ${rangePerm.encode(-50)}")
+    println("decode(...): ${rangePerm.decode(rangePerm.encode(-50))}")
+
+    // Example 5: Full 2^32 bit range permutation
+    // Half the values will be negative
+    val fullPerm = intPermutation(-1, seed = 1L)
+    println(fullPerm.encode(0)) // 1339315335
+    println(fullPerm.encode(1)) // -897806455
 
 }
 ```
