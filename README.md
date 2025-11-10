@@ -1,6 +1,7 @@
 # KPermute
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.eigenity/kpermute.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.eigenity/kpermute/1.0.0)
+[![codecov](https://codecov.io/gh/Eigenity/kpermute/branch/main/graph/badge.svg)](https://codecov.io/gh/Eigenity/kpermute)
 
 > **Fast, deterministic integer permutation library for Kotlin.**  
 > Shuffle or obfuscate large integer domains efficiently using bijective,
