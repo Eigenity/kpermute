@@ -8,7 +8,7 @@
 >
 > ⚠️ **Not intended for cryptographic use.**  
 > Suitable for data masking, sampling, and reproducible pseudo-randomization
-> where reversibility is required.
+> where reversibility is required. You decide if your use-case is cryptographic.
 
 ---
 
@@ -164,6 +164,3 @@ the next power-of-two space and retry until the output falls in `[0, size)`.
    “xxHash – Extremely fast hash algorithm,” 2014. [GitHub][6]
 
 ---
-
-This version is fully GitHub-compatible, readable in both rendered and raw
-Markdown, and keeps all URLs neatly referenced at the bottom.
