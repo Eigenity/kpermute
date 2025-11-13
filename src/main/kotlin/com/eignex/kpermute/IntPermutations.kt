@@ -1,4 +1,4 @@
-package com.eigenity.kpermute
+package com.eignex.kpermute
 
 /**
  * Reversible permutation over a 32-bit integer domain.

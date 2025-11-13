@@ -1,4 +1,4 @@
-package com.eigenity.kpermute
+package com.eignex.kpermute
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

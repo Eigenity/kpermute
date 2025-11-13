@@ -1,6 +1,6 @@
 @file:JvmName("Permutations")
 
-package com.eigenity.kpermute
+package com.eignex.kpermute
 
 import kotlin.random.Random
 

@@ -10,7 +10,7 @@ plugins {
     id("io.github.sgtsilvio.gradle.maven-central-publishing") version "0.4.1"
 }
 
-group = "com.eigenity"
+group = "com.eignex"
 version = "1.0.0"
 
 repositories { mavenCentral() }
@@ -44,7 +44,7 @@ publishing {
             pom {
                 name.set("kpermute")
                 description.set("Pure Kotlin JVM library.")
-                url.set("https://github.com/Eigenity/kpermute")
+                url.set("https://github.com/Eignex/kpermute")
                 licenses {
                     license {
                         name.set("Apache-2.0")
@@ -52,9 +52,9 @@ publishing {
                     }
                 }
                 scm {
-                    url.set("https://github.com/Eigenity/kpermute")
-                    connection.set("scm:git:https://github.com/Eigenity/kpermute.git")
-                    developerConnection.set("scm:git:ssh://git@github.com/Eigenity/kpermute.git")
+                    url.set("https://github.com/Eignex/kpermute")
+                    connection.set("scm:git:https://github.com/Eignex/kpermute.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/Eignex/kpermute.git")
                 }
                 developers {
                     developer {

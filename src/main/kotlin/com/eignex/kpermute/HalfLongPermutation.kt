@@ -1,4 +1,4 @@
-package com.eigenity.kpermute
+package com.eignex.kpermute
 
 import kotlin.math.absoluteValue
 import kotlin.random.Random
